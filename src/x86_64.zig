@@ -56,7 +56,7 @@ test {
         fn run(this_coro: *Coro, arg: ?*anyopaque) callconv(.C) noreturn {
             const counter: *i32 = @alignCast(@ptrCast(arg.?));
             counter.* += 1;
-            this_coro.transferTo(&global.main);
+            global.main.transferFrom(this_coro);
             unreachable;
         }
     }.run;
