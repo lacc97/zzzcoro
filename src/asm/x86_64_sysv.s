@@ -38,14 +38,14 @@ retq
 #
 # Params
 #   - rdi: pointer to Coro (*Coro)
-#   - r14: pointer to main function (*const Coro.FnMain aka *const fn (coro: *Coro, args: ?*anyopaque) callconv(.C) noreturn)
-#   - r15: pointer to args (?*anyopaque)
+#   - rbp: pointer to args (?*anyopaque)
+#   - rbx: pointer to main function (*const Coro.FnMain aka *const fn (coro: *Coro, args: ?*anyopaque) callconv(.C) noreturn)
 #
 .global __zzzcoro_start
 __zzzcoro_start:
 
 /* Move the args pointer to the correct register for second parameter in ABI */
-movq %r15, %rsi
+movq %rbp, %rsi
 
 /* Transfer into main. */
-jmpq *%r14
+jmpq *%rbx
